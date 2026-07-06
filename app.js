@@ -11,7 +11,6 @@ function enviar() {
   if (!texto) return;
 
   adicionarMensagem(texto, "user");
-
   input.value = "";
 
   responderIA(texto);
@@ -31,6 +30,7 @@ function adicionarMensagem(texto, tipo) {
 
 function renderizar() {
   chat.innerHTML = "";
+
   historico.forEach(m => {
     const div = document.createElement("div");
     div.classList.add("msg", m.tipo);
@@ -41,11 +41,12 @@ function renderizar() {
 
 async function responderIA(texto) {
 
-  // mensagem de carregando
+  // loading visível
   const loading = document.createElement("div");
   loading.classList.add("msg", "bot");
   loading.innerText = "🧠 Pensando...";
   chat.appendChild(loading);
+  chat.scrollTop = chat.scrollHeight;
 
   try {
 
@@ -57,15 +58,32 @@ async function responderIA(texto) {
       body: JSON.stringify({ mensagem: texto })
     });
 
+    // se backend falhar
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText || "Erro no backend");
+    }
+
     const data = await res.json();
 
-    loading.innerText = data.resposta || "Sem resposta da IA.";
+    console.log("RESPOSTA IA:", data);
 
-    historico.push({ texto: loading.innerText, tipo: "bot" });
+    const respostaFinal =
+      data?.resposta ||
+      data?.error ||
+      "Sem resposta da IA.";
+
+    loading.innerText = respostaFinal;
+
+    historico.push({ texto: respostaFinal, tipo: "bot" });
     localStorage.setItem("chat", JSON.stringify(historico));
 
   } catch (error) {
-    loading.innerText = "Erro ao conectar na IA.";
-    console.error(error);
+
+    console.error("ERRO COMPLETO:", error);
+
+    loading.innerText =
+      "❌ Erro ao conectar na IA: " + error.message;
+
   }
 }
