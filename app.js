@@ -1,88 +1,71 @@
-// ===============================
-// SISTEMA ROBUSTO DE NAVEGAÇÃO
-// ===============================
+// ==========================
+// NAVEGAÇÃO SEGURA
+// ==========================
 
 function mostrarTela(id) {
-    const telas = document.querySelectorAll("main section");
 
-    telas.forEach(tela => {
-        tela.style.display = "none";
+    const secoes = document.querySelectorAll("main section");
+
+    secoes.forEach(secao => {
+        secao.style.display = "none";
     });
 
-    const destino = document.getElementById(id);
+    const alvo = document.getElementById(id);
 
-    if (destino) {
-        destino.style.display = "block";
+    if (alvo) {
+        alvo.style.display = "block";
     } else {
         console.warn("Tela não encontrada:", id);
 
-        const fallback = document.querySelector("main");
-        if (fallback) {
-            fallback.innerHTML = `
-                <div style="
-                    padding:20px;
-                    font-family:sans-serif;
-                    text-align:center;
-                ">
-                    <h2>⚠️ Tela em desenvolvimento</h2>
-                    <p>Esta seção ainda não foi configurada corretamente.</p>
-                </div>
-            `;
-        }
+        document.getElementById("home").style.display = "block";
     }
 }
 
 
-// ===============================
-// IA (VERSÃO CORRIGIDA)
-// ===============================
+// ==========================
+// IA SIMULADA FUNCIONAL
+// ==========================
 
 async function perguntarIA() {
 
-    const perguntaEl = document.getElementById("pergunta");
-    const respostaEl = document.getElementById("respostaIA");
+    const input = document.getElementById("pergunta");
+    const resposta = document.getElementById("respostaIA");
 
-    if (!perguntaEl || !respostaEl) {
-        console.error("Elementos da IA não encontrados");
-        return;
-    }
+    if (!input || !resposta) return;
 
-    const pergunta = perguntaEl.value.trim();
+    const pergunta = input.value.trim();
 
     if (pergunta === "") {
-        respostaEl.innerHTML = "Digite uma pergunta.";
+        resposta.innerHTML = "⚠️ Digite uma pergunta.";
         return;
     }
 
-    respostaEl.innerHTML = "🧠 Pensando...";
+    resposta.innerHTML = "🧠 Pensando...";
 
-    // simulação de resposta mais inteligente
     setTimeout(() => {
 
-        respostaEl.innerHTML = `
+        resposta.innerHTML = `
             <div style="
-                background:#f3f4f6;
+                background:#111827;
+                color:#fff;
                 padding:12px;
                 border-radius:10px;
                 margin-top:10px;
-                font-family:sans-serif;
             ">
-                <strong>👤 Você:</strong> ${pergunta}
+                <strong>Você:</strong> ${pergunta}
                 <br><br>
-                <strong>🤖 Assistente:</strong> 
-                Estou funcionando corretamente. Em breve você poderá conectar uma IA real (API) para respostas automáticas.
+                <strong>IA:</strong> Estou funcionando corretamente. Em breve este sistema será conectado a uma IA real.
             </div>
         `;
 
-    }, 1200);
+    }, 1000);
 }
 
 
-// ===============================
-// BLOQUEIA "EM CONSTRUÇÃO"
-// ===============================
+// ==========================
+// BLOQUEIO DE "EM CONSTRUÇÃO"
+// ==========================
 
-// Intercepta qualquer clique com texto "em construção"
 document.addEventListener("click", function (e) {
 
     const texto = e.target.innerText?.toLowerCase();
@@ -90,6 +73,8 @@ document.addEventListener("click", function (e) {
     if (texto && texto.includes("em construção")) {
         e.preventDefault();
 
-        alert("🚧 Esta funcionalidade já está sendo desenvolvida.");
+        e.target.innerHTML = "✔ Em breve disponível";
+
+        console.log("Seção em desenvolvimento clicada");
     }
 });
