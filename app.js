@@ -41,10 +41,31 @@ function renderizar() {
 
 async function responderIA(texto) {
 
-  adicionarMensagem("...", "bot");
+  // mensagem de carregando
+  const loading = document.createElement("div");
+  loading.classList.add("msg", "bot");
+  loading.innerText = "🧠 Pensando...";
+  chat.appendChild(loading);
 
-  // 🔴 AQUI entra IA real depois
-  setTimeout(() => {
-    chat.lastChild.innerText = "Estou funcionando. Conecte uma IA real agora.";
-  }, 800);
+  try {
+
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ mensagem: texto })
+    });
+
+    const data = await res.json();
+
+    loading.innerText = data.resposta || "Sem resposta da IA.";
+
+    historico.push({ texto: loading.innerText, tipo: "bot" });
+    localStorage.setItem("chat", JSON.stringify(historico));
+
+  } catch (error) {
+    loading.innerText = "Erro ao conectar na IA.";
+    console.error(error);
+  }
 }
