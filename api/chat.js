@@ -40,3 +40,7 @@ const resposta =
     res.status(500).json({ error: "Erro na IA" });
   }
 }
+
+const apiKey = process.env.GEMINI_API_KEY;
+
+console.log("API KEY:", apiKey); // 👈 ADICIONE ISSO
