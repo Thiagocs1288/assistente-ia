@@ -49,7 +49,7 @@ async function responderIA(texto) {
 
   try {
 
-    const res = await fetch("https://assistente-ia-mu.vercel.app/api/chat", {
+    const res = await fetch("/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
