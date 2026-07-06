@@ -1,71 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AURA IA</title>
 
 <link rel="stylesheet" href="style.css">
-
-<meta name="theme-color" content="#111827">
+<meta name="theme-color" content="#0f172a">
 
 </head>
 
 <body>
 
-<header>
-<h1>AURA IA</h1>
-<p>Seu assistente pessoal inteligente</p>
-</header>
+<div id="app">
 
-<nav>
-<button onclick="mostrarTela('home')">🏠</button>
-<button onclick="mostrarTela('agenda')">📅</button>
-<button onclick="mostrarTela('tarefas')">✅</button>
-<button onclick="mostrarTela('financeiro')">💰</button>
-<button onclick="mostrarTela('ia')">🤖</button>
-</nav>
+  <header>
+    <h1>🤖 AURA IA</h1>
+  </header>
 
-<main>
+  <main id="chat"></main>
 
-<section id="home">
-<h2>Home</h2>
-<p>Bem-vindo ao seu assistente.</p>
-</section>
+  <footer>
+    <input id="input" placeholder="Digite sua pergunta...">
+    <button onclick="enviar()">➤</button>
+  </footer>
 
-<section id="agenda" style="display:none">
-<h2>Agenda</h2>
-<p>Em construção...</p>
-</section>
-
-<section id="tarefas" style="display:none">
-<h2>Tarefas</h2>
-<p>Em construção...</p>
-</section>
-
-<section id="financeiro" style="display:none">
-<h2>Financeiro</h2>
-<p>Em construção...</p>
-</section>
-
-<section id="ia" style="display:none">
-
-<h2>IA</h2>
-
-<textarea id="pergunta" placeholder="Digite sua pergunta"></textarea>
-
-<button onclick="perguntarIA()">Perguntar</button>
-
-<div id="respostaIA"></div>
-
-</section>
-
-</main>
+</div>
 
 <script src="app.js"></script>
 
 </body>
 </html>
- <!-- force rebuild -->
