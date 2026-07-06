@@ -8,9 +8,11 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.GEMINI_API_KEY;
 
+  console.log("API KEY:", apiKey);
+
   try {
-   const response = await fetch(
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey,
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey,
       {
         method: "POST",
         headers: {
@@ -28,19 +30,16 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-   console.log("RESPOSTA GEMINI:", JSON.stringify(data, null, 2));
+    console.log("RESPOSTA GEMINI:", JSON.stringify(data, null, 2));
 
-const resposta =
-  data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-  "ERRO: resposta vazia do Gemini";
+    const resposta =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "ERRO: resposta vazia do Gemini";
+
     res.status(200).json({ resposta });
 
   } catch (error) {
-    console.error(error);
+    console.error("ERRO GEMINI:", error);
     res.status(500).json({ error: "Erro na IA" });
   }
 }
-
-const apiKey = process.env.GEMINI_API_KEY;
-
-console.log("API KEY:", apiKey); // 👈 ADICIONE ISSO
