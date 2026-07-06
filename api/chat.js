@@ -33,9 +33,10 @@ export default async function handler(req, res) {
     console.log("RESPOSTA GEMINI:", JSON.stringify(data, null, 2));
 
     const resposta =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "ERRO: resposta vazia do Gemini";
-
+  data?.candidates?.[0]?.content?.parts?.[0]?.text ??
+  data?.candidates?.[0]?.content?.parts?.[0] ??
+  data?.candidates?.[0]?.content ??
+  JSON.stringify(data);
     res.status(200).json({ resposta });
 
   } catch (error) {
