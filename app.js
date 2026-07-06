@@ -1,80 +1,50 @@
-// ==========================
-// NAVEGAÇÃO SEGURA
-// ==========================
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
 
-function mostrarTela(id) {
+// histórico
+let historico = JSON.parse(localStorage.getItem("chat")) || [];
 
-    const secoes = document.querySelectorAll("main section");
+renderizar();
 
-    secoes.forEach(secao => {
-        secao.style.display = "none";
-    });
+function enviar() {
+  const texto = input.value.trim();
+  if (!texto) return;
 
-    const alvo = document.getElementById(id);
+  adicionarMensagem(texto, "user");
 
-    if (alvo) {
-        alvo.style.display = "block";
-    } else {
-        console.warn("Tela não encontrada:", id);
+  input.value = "";
 
-        document.getElementById("home").style.display = "block";
-    }
+  responderIA(texto);
 }
 
+function adicionarMensagem(texto, tipo) {
+  const div = document.createElement("div");
+  div.classList.add("msg", tipo);
+  div.innerText = texto;
 
-// ==========================
-// IA SIMULADA FUNCIONAL
-// ==========================
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 
-async function perguntarIA() {
-
-    const input = document.getElementById("pergunta");
-    const resposta = document.getElementById("respostaIA");
-
-    if (!input || !resposta) return;
-
-    const pergunta = input.value.trim();
-
-    if (pergunta === "") {
-        resposta.innerHTML = "⚠️ Digite uma pergunta.";
-        return;
-    }
-
-    resposta.innerHTML = "🧠 Pensando...";
-
-    setTimeout(() => {
-
-        resposta.innerHTML = `
-            <div style="
-                background:#111827;
-                color:#fff;
-                padding:12px;
-                border-radius:10px;
-                margin-top:10px;
-            ">
-                <strong>Você:</strong> ${pergunta}
-                <br><br>
-                <strong>IA:</strong> Estou funcionando corretamente. Em breve este sistema será conectado a uma IA real.
-            </div>
-        `;
-
-    }, 1000);
+  historico.push({ texto, tipo });
+  localStorage.setItem("chat", JSON.stringify(historico));
 }
 
+function renderizar() {
+  chat.innerHTML = "";
+  historico.forEach(m => {
+    const div = document.createElement("div");
+    div.classList.add("msg", m.tipo);
+    div.innerText = m.texto;
+    chat.appendChild(div);
+  });
+}
 
-// ==========================
-// BLOQUEIO DE "EM CONSTRUÇÃO"
-// ==========================
+async function responderIA(texto) {
 
-document.addEventListener("click", function (e) {
+  adicionarMensagem("...", "bot");
 
-    const texto = e.target.innerText?.toLowerCase();
-
-    if (texto && texto.includes("em construção")) {
-        e.preventDefault();
-
-        e.target.innerHTML = "✔ Em breve disponível";
-
-        console.log("Seção em desenvolvimento clicada");
-    }
-});
+  // 🔴 AQUI entra IA real depois
+  setTimeout(() => {
+    chat.lastChild.innerText = "Estou funcionando. Conecte uma IA real agora.";
+  }, 800);
+}
