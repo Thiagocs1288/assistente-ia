@@ -28,10 +28,11 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    const resposta =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Sem resposta da IA.";
+   console.log("RESPOSTA GEMINI:", JSON.stringify(data, null, 2));
 
+const resposta =
+  data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+  "ERRO: resposta vazia do Gemini";
     res.status(200).json({ resposta });
 
   } catch (error) {
