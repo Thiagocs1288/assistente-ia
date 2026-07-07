@@ -1,33 +1,73 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AURA IA</title>
 
 <link rel="stylesheet" href="style.css">
-<meta name="theme-color" content="#0f172a">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#111827">
 
 </head>
 
 <body>
 
-<div id="app">
-
-  <header>
+<header>
     <h1>🤖 AURA IA</h1>
-  </header>
+    <p>Seu assistente pessoal inteligente</p>
+</header>
 
-  <main id="chat"></main>
 
-  <footer>
-    <input id="input" placeholder="Digite sua pergunta...">
-    <button onclick="enviar()">➤</button>
-  </footer>
+<main>
+
+<section class="chat-container">
+
+<div id="chat"></div>
+
+
+<div class="entrada">
+
+<textarea 
+id="input"
+placeholder="Digite sua mensagem..."
+></textarea>
+
+
+<button onclick="enviar()">
+Enviar
+</button>
+
 
 </div>
 
+
+<button class="limpar" onclick="limparChat()">
+Limpar conversa
+</button>
+
+
+</section>
+
+</main>
+
+
 <script src="app.js"></script>
 
+
+<script>
+
+if ("serviceWorker" in navigator) {
+ navigator.serviceWorker.register("sw.js");
+}
+
+</script>
+
+
 </body>
+
 </html>
